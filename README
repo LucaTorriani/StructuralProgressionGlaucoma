@@ -1,0 +1,61 @@
+###################################################################
+############################# READ ME #############################
+###################################################################
+
+
+## MAIN FILES (useful for the analysis reported in chapter for springer book)
+
+1. Create the dataset of relevant features using the "Create_dataset.R" file. The features considered are:
+        - "Patient"                         
+        - "Sex"                             
+        - "Race"                            
+        - "Type_of_glaucoma"                
+        - "yearofglaucoma"                  
+        - "Hypertension"                    
+        - "Diabetes"                        
+        - "Cardiovascular_Dz"               
+        - "family_history"                  
+        - "IOP"                             
+        - "MAP"                             
+        - "OPP"                             
+        - "HR"                              
+        - "visit2"                          
+        - "MD"                              
+        - "Vert_integrated_rim_area__vol_"  
+        - "Horz_integrated_rim_width__area_"
+        - "mean_RNFL_thickness"             
+        - "Age" 
+    
+   Then some visits, and also some entire patients, are removed due to  missing data.
+   Eventually the NA are imputed through linear regression. 
+   At the end of the file we generate "interp_lista_pazienti.RData" useful for the analysis.
+   
+2. Create the model for HIRWA or MD (choosing the desired covariates) using the files "Model_HIRWA.R" or   
+   "Model_MD.R" (using JAGS). 
+   They generate "output_modelHIRWA.RData" and "output_modelMD.RData" , respectively.
+   N.B. Numeric covariates are always standardized. 
+   
+3. Plot the IC for the betas and b_is of the two models using the file "plot_IC".
+
+4. For the HIRWA model, identify and study clusters based on the sign of the IC for the b_i using the   
+   file "Clustering.R". At the end of the file there are tests to highlight differences between groups.
+   
+## OTHER FILES (useful for preliminar analysis)
+
+"Descriptive_indexes"
+  File used to compute mean and sd for both longitudinal and non longitudinal variables. For longitudi
+  nal variables both great mean and mean per visit can be computed.
+  
+"count_na_reducedVariables"
+  File used to compute the percentage of missing data in the dataset in different cases:
+    - Total percentage of NA considering the original dataset (115 patients) without inserting skipped       visits
+    - Total percentage of NA considering the reduced dataset (108 patients) without inserting skipped 
+      visits
+    - Total percentage of NA considering the original dataset (115 patients) inserting skipped visits
+    - Total percentage of NA considering the reduced dataset (108 patients) inserting skipped visits
+    
+    - Percentage of NA for MD and HIRWA for the four different situation described above
+    
+"indexes_model_choice"
+  Given the RData of the output model the file can be used to compute the LPML and WAIC index of the 
+  model

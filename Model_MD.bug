@@ -1,0 +1,25 @@
+model{
+  
+  ## Dimension parameters
+  # N = number of patients
+  # n[i] = number of observations patient i, i = 1, ..., N
+  # n_cum = cumsum(n) (add 0 at the beginning) Dimension N+1
+  # p = number of covariates with fixed effects (intercept included)
+  # q = number of covariates with random effects (intercept included)
+  ### Likelihood
+  for(i in 1:N){
+    
+    for(j in ((n_cum[i]+1) : n_cum[i+1])){
+      mu[j] <- beta[1]  +  beta[2]*time[j] + beta[3]*IOP[j] + beta[4]*Horz_integrated_rim_width__area_[j];
+      
+      Y[j] ~ dnorm(mu[j], tau) ; 
+    }
+    
+  }
+  
+  
+  ### Priors
+  beta  ~ dmnorm(mu0, SigmaInv0);
+  tau ~ dgamma(alpha0, lambda0);
+  
+}
